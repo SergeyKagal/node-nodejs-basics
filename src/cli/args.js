@@ -1,10 +1,12 @@
 export const parseArgs = () => {
   // Write your code here
-  const cliArgs = process.argv;
+  const cliArgs = process.argv.slice(2);
+  const result = [];
   cliArgs.forEach((el, i) => {
-    if (el.includes('--')) {
-      console.log(`${el} is ${cliArgs[i + 1]}`);
+    if (el.startsWith('--') && cliArgs[i + 1]) {
+      result.push(`${el.slice(2)} is ${cliArgs[i + 1]}`);
     }
   });
+  console.log(result.join(', '));
 };
 parseArgs();
