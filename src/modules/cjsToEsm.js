@@ -1,16 +1,25 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+// eslint-disable-next-line node/no-unsupported-features/node-builtins
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const path = require('path');
 const { release, version } = require('os');
 const { createServer: createServerHttp } = require('http');
-require('./files/c');
+import './files/c.js';
 
 const random = Math.random();
 
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = require('./files/a.json');
+  unknownObject = require('./files/a.json');
 } else {
-    unknownObject = require('./files/b.json');
+  unknownObject = require('./files/b.json');
 }
 
 console.log(`Release ${release()}`);
@@ -21,11 +30,7 @@ console.log(`Path to current file is ${__filename}`);
 console.log(`Path to current directory is ${__dirname}`);
 
 const createMyServer = createServerHttp((_, res) => {
-    res.end('Request accepted');
+  res.end('Request accepted');
 });
 
-module.exports = {
-    unknownObject,
-    createMyServer,
-};
-
+export { unknownObject, createMyServer };
